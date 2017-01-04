@@ -1,0 +1,62 @@
+<h2>Mymaths Hack</h2>
+
+AuthCode extractor:
+<br />
+<code>
+  ((/authCode=(\d+)/.exec(document.querySelector('param[name="flashvars"]').value))[1])
+</code>
+<br />
+
+sCode = (authCode * taskID * 2 + q1 * 100 + q2) * 20000 + taskID ^ 2 <br />
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+  function calculate(){
+    var authCode = document.getElementById("authCode").value;
+    var taskID = document.getElementById("taskID").value;
+    var q1 = document.getElementById("q1score").value;
+    var q2 = document.getElementById("q2score").value;
+    document.getElementById("out").innerText = (((authCode * taskID * 2) + (q1 * 100) + q2) * 20000) + (taskID ^ 2);
+  }
+  function task(){
+    var page = document.getElementById("page").value;
+    $.ajax("/proxy/" + page).done(function(data){
+      var taskID = /taskID=(\d+)/.exec(data)[1]
+      document.getElementById("taskID").value = taskID;
+      document.getElementById("taskID2").value = taskID;
+      document.getElementById("taskID3").value = taskID;
+    });
+  }
+</script>
+
+Page Address New <input type="text" id="page" />
+<button onclick="task();">Fetch TaskID</button>
+
+<br />
+
+authCode <input type="text" id="authCode" />
+taskID <input type="text" id="taskID" />
+q1score <input type="text" id="q1score" />
+q2score <input type="text" id="q2score" />
+<button onclick="calculate();">Calculate</button>
+
+<div id="out"></div>
+
+<form method="POST" action="https://app.mymaths.co.uk/studentRecords/saveDataOH.asp">
+sCode <input type="text" name="sCode" />
+taskID <input type="text" name="taskID" id="taskID2" />
+q1score <input type="text" name="q1score" />
+q2score <input type="text" name="q2score" />
+<input type="submit" />
+</form>
+<br />
+<form method="POST" action="https://app.mymaths.co.uk/studentRecords/saveDataOH.asp">
+sCode <input type="text" name="sCode" />
+taskID <input type="text" name="taskID" id="taskID3" />
+q1score <input type="text" name="q1score" />
+q2score <input type="text" name="q2score" />
+q3score <input type="text" name="q3score" />
+q4score <input type="text" name="q4score" />
+<input type="submit" />
+</form>
